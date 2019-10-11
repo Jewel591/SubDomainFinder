@@ -55,6 +55,10 @@ for domain in open("../input/domains.txt",'r').readlines():
     if not os.path.exists("../output/" + domain.replace("\n","") + ".txt"):
         file = open("../output/" + domain.replace("\n","") + ".txt", 'wr')
         file.close()
+    if not os.path.exists("./output/" + domain.replace("\n","") + ".txt2"):
+        file = open("./output/" + domain.replace("\n","") + ".txt2", 'wr')
+        file.close()
+
     f_Sublist3r_out = open("./output/" + domain.replace("\n","") + ".txt2", 'r')
     for s1sublist3r_out in f_Sublist3r_out.readlines():
         signal = 1
