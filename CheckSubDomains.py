@@ -2,6 +2,7 @@
 import subprocess
 import os
 import sys
+import re
 import time
 
 f_domains = open("./input/domains.txt",'r')
@@ -18,7 +19,7 @@ print '\033[1;31;8m[+] 调用 subDomainsBrute.py 检测...\033[0m'
 subprocess.call("pwd", shell=True)
 
 for domain in f_domains.readlines():
-    mycommand = "python2.7 "+pwd+"/subDomainsBrute/subDomainsBrute.py -t 300 -o "+pwd+"/output/"+domain.replace("\n","")+".txt"+" "+domain
+    mycommand = "python2.7 "+pwd+"/subDomainsBrute/subDomainsBrute.py -i -t 300 -o "+pwd+"/output/"+domain.replace("\n","")+".txt"+" "+domain
     print '\033[1;31;8m[+] subDomainsBrute 正在检测域名:\033[0m',domain.replace("\n",""),'[',countnow,'/',countall,']'
     # print '[+] 执行命令： ', mycommand
     countnow+=1
@@ -46,7 +47,7 @@ for domain in open("../input/domains.txt",'r').readlines():
     p=subprocess.Popen(mycommand, shell=True)
     p.wait()
 
-# 去重、整合
+# 去重、整合、格式化
 print "Sublist3r 检测完成，正在合并结果..."
 print '\033[1;31;8m[+] Sublist3r 检测完成，正在合并结果...\033[0m'
 addnum = 0
@@ -73,6 +74,22 @@ for domain in open("../input/domains.txt",'r').readlines():
             addnum +=1
         # if signal == 0:
         #     print s1sublist3r_out.replace("\n", ""), "存在"
+
+    ### 去除报告中的ip 和空格等
+    f_report = open("../output/" + domain.replace("\n","") + ".txt", 'rw')
+    open("../tmp/tmp1.txt", 'w').truncate()
+    for line in f_report.readlines():
+        # print line
+        newline = re.sub("((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}", "",
+                         line).replace(" ", "").replace(",", "")
+        # f_domains.write(newline)
+
+        open("../tmp/tmp1.txt", 'a+').write(newline)
+    f_report.close()
+
+    open("../output/" + domain.replace("\n","") + ".txt", 'w').truncate()
+    for line2 in open("../tmp/tmp1.txt", 'r').readlines():
+        open("../output/" + domain.replace("\n","") + ".txt", 'a+').write(line2)
 
 print 'Sublist3r 新添加数量：',addnum
 f_domains.close()
