@@ -1,3 +1,7 @@
+相关项目：
+CheckPorts：https://github.com/Jewel591/CheckPorts
+CheckServices：https://github.com/Jewel591/CheckServices
+
 # 介绍
 在 subDomainsBrute 和 Sublist3r 上二次开发，添加了批量检测的功能，并整合 subDomainsBrute 和 Sublist3r 结果。
 
