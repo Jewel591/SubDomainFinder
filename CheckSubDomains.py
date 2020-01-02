@@ -11,11 +11,12 @@ parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter)
 parser.description="CheckSubDomains 是一个整合了 subDomainsBrute 和 Sublist3r 两者结果的子域名收集工具，并添加了批量收集域名的功能" \
                    "\n\n使用说明：\n" \
                    "\n1. 将需要检测的域名写入./input/domains.txt" \
-                   "\n2. 执行 python2.7 CheckSubDomains.py run 开始检测" \
+                   "\n2. 执行 python2.7 CheckSubDomains.py run 开始检测 (更多的爆破字典请执行 python2.7 CheckSubDomains.py --full run)" \
                    "\n3. 结果存放在./output/targetdomain.txt"
 parser.add_argument("run",help="start running CheckSubDomain.py")
+parser.add_argument("--full", action="store_true", dest="full", help="use full_dic to brute subdomains")
 # parser.description="sfsfsf"
-parser.parse_args()
+args = parser.parse_args()
 f_domains = open("./input/domains.txt",'r')
 countall=len(open("./input/domains.txt",'r').readlines())
 countnow = 1
@@ -30,7 +31,12 @@ print '\033[1;31;8m[+] 调用 subDomainsBrute.py 检测...\033[0m'
 subprocess.call("pwd", shell=True)
 
 for domain in f_domains.readlines():
-    mycommand = "python2.7 "+pwd+"/subDomainsBrute/subDomainsBrute.py -i -t 300 --full -o "+pwd+"/output/"+domain.replace("\n","")+".txt"+" "+domain
+    print "--full: ",args.full
+    if args.full:
+        mycommand = "python2.7 " + pwd + "/subDomainsBrute/subDomainsBrute.py -i -t 300 --full -o " + pwd + "/output/" + domain.replace(
+            "\n", "") + ".txt" + " " + domain
+    else:
+        mycommand = "python2.7 "+pwd+"/subDomainsBrute/subDomainsBrute.py -i -t 300 -o "+pwd+"/output/"+domain.replace("\n","")+".txt"+" "+domain
     print '\033[1;31;8m[+] subDomainsBrute 正在检测域名:\033[0m',domain.replace("\n",""),'[',countnow,'/',countall,']'
     # print '[+] 执行命令： ', mycommand
     countnow+=1
