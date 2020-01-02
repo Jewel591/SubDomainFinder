@@ -4,11 +4,18 @@ import os
 import sys
 import re
 import argparse
+from argparse import RawTextHelpFormatter
 import time
 
-parser = argparse.ArgumentParser()
-parser.description="CheckSubDomains 是一个整合了 subDomainsBrute 和 Sublist3r 两者结果的子域名收集工具，并添加了批量收集域名的功能"
-
+parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter)
+parser.description="CheckSubDomains 是一个整合了 subDomainsBrute 和 Sublist3r 两者结果的子域名收集工具，并添加了批量收集域名的功能" \
+                   "\n\n使用说明：\n" \
+                   "\n1. 将需要检测的域名写入./input/domains.txt" \
+                   "\n2. 执行 python2.7 CheckSubDomains.py run 开始检测" \
+                   "\n3. 结果存放在./output/targetdomain.txt"
+parser.add_argument("run",help="start running CheckSubDomain.py")
+# parser.description="sfsfsf"
+parser.parse_args()
 f_domains = open("./input/domains.txt",'r')
 countall=len(open("./input/domains.txt",'r').readlines())
 countnow = 1
