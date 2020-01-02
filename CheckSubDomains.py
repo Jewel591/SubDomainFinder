@@ -3,7 +3,11 @@ import subprocess
 import os
 import sys
 import re
+import argparse
 import time
+
+parser = argparse.ArgumentParser()
+parser.description="CheckSubDomains 是一个整合了 subDomainsBrute 和 Sublist3r 两者结果的子域名收集工具，并添加了批量收集域名的功能"
 
 f_domains = open("./input/domains.txt",'r')
 countall=len(open("./input/domains.txt",'r').readlines())
@@ -19,7 +23,7 @@ print '\033[1;31;8m[+] 调用 subDomainsBrute.py 检测...\033[0m'
 subprocess.call("pwd", shell=True)
 
 for domain in f_domains.readlines():
-    mycommand = "python2.7 "+pwd+"/subDomainsBrute/subDomainsBrute.py -i -t 300 -o "+pwd+"/output/"+domain.replace("\n","")+".txt"+" "+domain
+    mycommand = "python2.7 "+pwd+"/subDomainsBrute/subDomainsBrute.py -i -t 300 --full -o "+pwd+"/output/"+domain.replace("\n","")+".txt"+" "+domain
     print '\033[1;31;8m[+] subDomainsBrute 正在检测域名:\033[0m',domain.replace("\n",""),'[',countnow,'/',countall,']'
     # print '[+] 执行命令： ', mycommand
     countnow+=1
