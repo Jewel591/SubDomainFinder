@@ -26,7 +26,7 @@ CheckServices：https://github.com/Jewel591/CheckServices
 - 输入：需要检测的域名写入到 ./input/domains.txt 
 - 输出：检测结果存放在 ./output/文件夹中，结果按照 domainname.txt 存放
 - 调用 Sublist3r 时，Sublist3r 的扫描结果会暂时存放在 ./Sublist3r/output 目录，检测完成后会合并到 ./output 并去重
-- 启动扫描：`python2.7 CheckSubDomains.py`
+- 启动扫描：`python2.7 CheckSubDomains.py run`
 
 # CheckTools 介绍（流程）
 
